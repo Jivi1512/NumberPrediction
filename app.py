@@ -3,6 +3,10 @@ import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 from tensorflow.keras.models import load_model
 from PIL import Image, ImageOps
+import os
+print("Current working directory:", os.getcwd())
+print("List of files in directory:", os.listdir())
+
 smodel=load_model("NumberPrediction/mnist_model12new.h5")
 
 st.title("Predict your digit!")
