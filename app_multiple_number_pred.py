@@ -4,7 +4,7 @@ from streamlit_drawable_canvas import st_canvas
 from tensorflow.keras.models import load_model
 from PIL import Image, ImageOps
 
-smodel = load_model("mnist_model12new.h5")
+model = load_model("mnist_model12new.h5")
 
 def preprocess_image(image_data):
     img = Image.fromarray(image_data.astype(np.uint8))
@@ -14,9 +14,9 @@ def preprocess_image(image_data):
     arr = np.array(img).astype("float32") / 255.0
     return arr.reshape(1, 28, 28, 1)
 
-st.title("Predict a 3-digit number from 3 canvases")
-st.write("Draw one digit (0-9) on each canvas from left to right. Click Predict to get the 3-digit prediction and top-3 candidates.")
-
+st.title("Predict a 3-digit number")
+st.write("Draw one digit (0-9) on each canvas from left to right.")
+st.write("Click Predict to get the 3-digit prediction and top-3 candidates.")
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -40,16 +40,16 @@ if st.button("Predict"):
     if not images:
         st.error("Please draw on all three canvases before predicting.")
     else:
-        probs = []
-        preds = []
+        prob = [] #per canvas probability
+        pred = [] #single digit argmax prediction
         with st.spinner("Predicting..."):
             for img in images:
-                p = smodel.predict(img)[0]
-                probs.append(p)
-                preds.append(str(np.argmax(p)))
-            predicted_number = "".join(preds)
+                p = model.predict(img)[0]
+                prob.append(p)
+                pred.append(str(np.argmax(p)))
+            predicted_number = "".join(pred)
             st.success(f"Predicted 3-digit number: {predicted_number}")
-            p0, p1, p2 = probs
+            p0, p1, p2 = prob
             indices = np.arange(10)
             combos = []
             for i in indices:
@@ -58,7 +58,7 @@ if st.button("Predict"):
                         prob = p0[i] * p1[j] * p2[k]
                         combos.append((prob, f"{i}{j}{k}"))
             combos.sort(reverse=True, key=lambda x: x[0])
-            st.markdown("### Top 3 Predictions (with combined confidence)")
+            st.markdown("### Top 3 Predictions")
             for prob, num in combos[:3]:
                 st.write(f"**{num}** — {prob*100:.2f}%")
         st.success("Done")
