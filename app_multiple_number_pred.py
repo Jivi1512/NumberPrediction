@@ -21,13 +21,13 @@ col1, col2, col3 = st.columns(3)
 
 with col1:
     st.markdown("### Digit 1")
-    canvas1 = st_canvas(fill_color="black", stroke_width=30, stroke_color="black", background_color="white", height=280, width=280, drawing_mode="freedraw", key="canvas1")
+    canvas1 = st_canvas(fill_color="black", stroke_width=25, stroke_color="black", background_color="white", height=280, width=280, drawing_mode="freedraw", key="canvas1")
 with col2:
     st.markdown("### Digit 2")
-    canvas2 = st_canvas(fill_color="black", stroke_width=30, stroke_color="black", background_color="white", height=280, width=280, drawing_mode="freedraw", key="canvas2")
+    canvas2 = st_canvas(fill_color="black", stroke_width=25, stroke_color="black", background_color="white", height=280, width=280, drawing_mode="freedraw", key="canvas2")
 with col3:
     st.markdown("### Digit 3")
-    canvas3 = st_canvas(fill_color="black", stroke_width=30, stroke_color="black", background_color="white", height=280, width=280, drawing_mode="freedraw", key="canvas3")
+    canvas3 = st_canvas(fill_color="black", stroke_width=25, stroke_color="black", background_color="white", height=280, width=280, drawing_mode="freedraw", key="canvas3")
 
 if st.button("Predict"):
     canvases = [canvas1, canvas2, canvas3]
